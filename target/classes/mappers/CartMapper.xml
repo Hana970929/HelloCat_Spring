@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hellocat.mapper.CartMapper">
+	<select id="showCart" resultType="com.hellocat.dto.CartDto">
+		SELECT (SELECT price FROM product p WHERE p.id=c.pd_id) price,c.* FROM (SELECT * FROM like_product WHERE user_id=#{id})c
+	</select>
+</mapper>
