@@ -4,6 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hellocat.mapper.MemberMapper">
 	<select id="login" resultType="String">
-		SELECT pw FROM userdata WHERE user_id=#{id}
+		SELECT pw FROM userdata WHERE id=#{id}
 	</select>
 </mapper>

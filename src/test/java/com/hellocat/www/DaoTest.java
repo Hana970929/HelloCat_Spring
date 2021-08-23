@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hellocat.dao.CartDaoImpl;
+import com.hellocat.dao.MemberDaoImpl;
 import com.hellocat.dao.ProductDaoImpl;
 import com.hellocat.dto.CartDto;
 import com.hellocat.dto.ProductDtoForDetail;
@@ -22,6 +23,8 @@ public class DaoTest {
 	private ProductDaoImpl productDao;
 	@Autowired
 	private CartDaoImpl cartDao;
+	@Autowired
+	private MemberDaoImpl memberDao;
 	
 	@Test
 	public void storeMain() throws Exception {
@@ -49,5 +52,14 @@ public class DaoTest {
 		System.out.println("showcart!");
 		System.out.println(list);
 	}
-	
+	@Test
+	public void loginTest() throws Exception {
+		String id = "coke1316";
+		String pw = "1316";
+		if(memberDao.login(id, pw)) {
+			System.out.println("테스트 성공!");
+		} else {
+			System.out.println("뭐가 문제지..?");
+		}
+	}
 }

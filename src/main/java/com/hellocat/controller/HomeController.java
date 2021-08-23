@@ -17,6 +17,7 @@ import com.hellocat.dto.CartDto;
 import com.hellocat.dto.ProductDtoForDetail;
 import com.hellocat.dto.ProductDtoForStore;
 import com.hellocat.service.CartServiceImpl;
+import com.hellocat.service.MemberServiceImpl;
 import com.hellocat.service.ProductServiceImpl;
 
 @Controller
@@ -25,6 +26,8 @@ public class HomeController {
 	ProductServiceImpl pdService; 
 	@Autowired
 	CartServiceImpl cartService;
+	@Autowired
+	MemberServiceImpl memberService;
 	
 	DecimalFormat df = new DecimalFormat("###,###");
 	
@@ -94,8 +97,14 @@ public class HomeController {
 	}
 	@RequestMapping(value="/loginAction")
 	public String loginAction(String url,String id, String pw) {
-		
-		return url;
+		if(memberService.login(id, pw)) {
+			if(id.equals("admin")) {
+				return "관리자페이지";
+				//관리자페이지 미구현
+			} return url;
+		} else {
+			return "login_fail";
+		}
 	}
 	@RequestMapping("/logout")
     public ModelAndView logout(HttpSession session) {

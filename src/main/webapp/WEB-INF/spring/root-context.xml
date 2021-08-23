@@ -25,6 +25,7 @@
 	
 	<bean id="productDao" class="com.hellocat.dao.ProductDaoImpl"/>
 	<bean id="cartDao" class="com.hellocat.dao.CartDaoImpl"/>
+	<bean id="memberDao" class="com.hellocat.dao.MemberDaoImpl"/>
 	
 	<!-- <bean id="productService" class="com.hellocat.service.ProductServiceImpl"/>
 	<bean id="cartService" class="com.hellocat.service.CartServiceImpl"/> -->
