@@ -47,5 +47,5 @@ public class ServiceTest {
 		List<CartDto> list = cartService.showCart("dodoo");
 		System.out.println(list);
 	}
-	
+	//깃허브 테스트를 위한 주석
 }
