@@ -61,4 +61,10 @@ public class ProductDaoImpl implements ProductDao{
 		return showOnePdList;
 	}
 
+	@Override
+	public List<ProductDtoForStore> store_infinite() {
+		List<ProductDtoForStore> nextInfinite = sqlSession.selectList("com.hellocat.mapper.productMapper.selectPd_infinite");
+		return null;
+	}
+
 }

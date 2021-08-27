@@ -9,23 +9,91 @@
 <meta charset="UTF-8">
 <title>재밌겠냥</title>
 <link href="resources/CSS/HC_store.css" rel="stylesheet" type="text/css"/>
-<%-- <%String id = (String)session.getAttribute("user_id");%> --%>
+<%String id = (String)session.getAttribute("user_id");%>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<%-- <script>
+<script>
 $(function(){
 	$(".logout_text").click(function(){
-		location.href = "LogOut.jsp";
+		location.href = "LogOut";
 		<%
 			if(id!=null){%>
 				alert('로그아웃 되었습니다! 다음에 또 오세요!')
-				location.href = "HCController?command=storemain";
+				location.href = "storemain";
 			<%}else{%>
 				alert('뭐가 문제지...')
 			<%}%>
 	});
-	
+	var page = 2; //불러올 페이지
+	var data = {
+			sort:'toy',
+			orderBy:'sales'
+	}
+	function next_load_t() { 
+		$.ajax({
+			type:"POST",
+			url:"infiniteScroll/t",
+			data : {'page':page, 'data':data},
+			dataType : "json",
+			success: function(string) {
+				var result = string.jsonArr;
+				if(result.length<6) {
+					for (var i=0;i<=result.length-1;i++) {
+						var pd = result[i];
+						var append_node = "";
+						append_node += "<div class='showOnePd fl'>";
+						append_node += "<div class='pdImgDiv'>";
+						append_node += "<a href='HCController?command=showOnePd&id="+pd.pdid+"'><img src='Images/"+pd.photo+".jpg' class='scale pdPicImg'/></a>";
+						append_node += "</div>";
+						append_node += "<h2><span class='textDark'>갖고싶냥</span></h2>";
+						append_node += "<h1><a href='goods_view.html'>"+pd.name+"</a>";
+						append_node += "</h1><h3>"+pd.explain+"</h3>";
+						append_node += "<h2 class='fl' style='margin-top: 10px;'>"+pd.s_price+"원</h2>";
+						append_node += "<div class='showStars' style='float:right; width: 180px;'>";
+						for(var j=1; j<=5; j++) { 
+							if(j<=pd.score) {
+								append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"'><img src='Images/rvStar.png' class='fl starImg'/></a>";
+						  }	else {
+							  	append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"'><img src='Images/rvstar2.png' class='fl starImg'/></a>";			
+							}
+						} append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"' style='line-height: 49px;'> ("+pd.rvcnt+")</a>";	
+						append_node += "</div>";
+						append_node += "</div>";
+						$('#pdcontainer').append(append_node);
+					} page++;
+					$("#morePdbtn").html("상품이 더 이상 없습니다.")
+					$("#morePdbtn").prop("disabled", true);
+				} else {
+					for (var i=0;i<=result.length-1;i++) {
+						var pd = result[i];
+						var append_node = "";
+						append_node += "<div class='showOnePd fl'>";
+						append_node += "<div class='pdImgDiv'>";
+						append_node += "<a href='HCController?command=showOnePd&id="+pd.pdid+"'><img src='Images/"+pd.photo+".jpg' class='scale pdPicImg'/></a>";
+						append_node += "</div>";
+						append_node += "<h2><span class='textDark'>갖고싶냥</span></h2>";
+						append_node += "<h1><a href='goods_view.html'>"+pd.name+"</a>";
+						append_node += "</h1><h3>"+pd.explain+"</h3>";
+						append_node += "<h2 class='fl' style='margin-top: 10px;'>"+pd.s_price+"원</h2>";
+						append_node += "<div class='showStars' style='float:right; width: 180px;'>";
+						for(var j=1; j<=5; j++) { 
+							if(j<=pd.score) {
+								append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"'><img src='Images/rvStar.png' class='fl starImg'/></a>";
+						  }	else {
+							  	append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"'><img src='Images/rvstar2.png' class='fl starImg'/></a>";			
+							}
+						} append_node += "<a href='HCController?command=showReview&id="+pd.pdid+"' style='line-height: 49px;'> ("+pd.rvcnt+")</a>";	
+						append_node += "</div>";
+						append_node += "</div>";
+						$('#pdcontainer').append(append_node);
+					} page++;
+				}
+			},
+			error: function(xhr, status, error) {
+			 	}
+			});
+		}
 });
-</script> --%>
+</script>
 </head>
 <body bgcolor="#f1e6d3">
 	<div class="basic">

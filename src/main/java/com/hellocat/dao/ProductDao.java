@@ -15,4 +15,5 @@ public interface ProductDao {
 	List<ProductDtoForStore> store_goods();
 	List<ProductDtoForStore> store_goods_n();
 	ProductDtoForDetail showOnePd(String id);
+	List<ProductDtoForStore> store_infinite();
 }

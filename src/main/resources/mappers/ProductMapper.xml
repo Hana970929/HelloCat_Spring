@@ -63,4 +63,12 @@
 		SELECT (SELECT TRUNC(AVG(score),2) FROM review r WHERE r.pd_id=p.id) score, p.* FROM
 		(SELECT * FROM product WHERE id=#{id})p
 	</select>
+	<select id="selectPd_infinite" resultType="com.hellocat.dto.ProductDtoForStore">
+		<![CDATA[
+			select (SELECT TRUNC(AVG(score),2) FROM review r WHERE r.pd_id=a.id) score,
+			(SELECT count(*) FROM review r WHERE r.pd_id=a.id) cnt, a.*
+			from (select ROWNUM RNUM, b.* from (SELECT * FROM product WHERE id like '%#{sort}%' ORDER BY #{salesOrId} DESC) b )a
+			WHERE a.RNUM>=#{start} AND a.RNUM<=#{end}
+		]]>
+	</select>
 </mapper>
